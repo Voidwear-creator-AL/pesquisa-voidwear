@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VOID WEAR — Street Tailoring</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@1,300&family=Syne:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* ── TOKENS ── */
+        :root {
+            --black : #060605;
+            --off   : #0e0d0c;
+            --white : #f0ece6;
+            --cream : #e6dfd6;
+            --gold  : #c9a96e;
+            --muted : #5c5750;
+            --line  : rgba(255,255,255,.07);
+        }
+
+        /* ── RESET ── */
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+        body {
+            font-family:'Syne', sans-serif;
+            background:var(--black);
+            color:var(--white);
+            overflow-x:hidden;
+            -webkit-font-smoothing:antialiased;
+        }
+
+        /* grain — decorativo, leve */
+        body::after {
+            content:''; position:fixed; inset:0;
+            pointer-events:none; z-index:9999; opacity:.025;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* ── HEADER ── */
+        .site-header {
+            display:flex; align-items:center;
+            padding:clamp(14px,3vw,22px) clamp(18px,5vw,40px);
+            border-bottom:1px solid var(--line);
+        }
+        .logo {
+            font-family:'Bebas Neue', sans-serif;
+            font-size:clamp(1.5rem,4vw,2rem);
+            letter-spacing:.2em;
+            color:var(--white);
+            text-decoration:none;
+            line-height:1;
+            white-space:nowrap;
+        }
+        .logo .dot { color:var(--gold); }
+
+        /* ── HERO ── */
+        .hero {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:clamp(20px,5vw,48px);
+            align-items:center;
+            padding:clamp(32px,6vw,52px) clamp(18px,5vw,40px) clamp(28px,5vw,44px);
+            border-bottom:1px solid var(--line);
+        }
+        @media (max-width:580px) {
+            .hero { grid-template-columns:1fr; gap:22px; }
+        }
+
+        .hero-left {
+            opacity:0;
+            animation:fadeUp .8s .1s cubic-bezier(.22,1,.36,1) forwards;
+        }
+        .eyebrow {
+            font-size:clamp(.5rem,.75vw,.62rem);
+            letter-spacing:.32em; text-transform:uppercase;
+            color:var(--gold); margin-bottom:12px; display:block;
+        }
+        .hero-title {
+            font-family:'Bebas Neue', sans-serif;
+            font-size:clamp(2.8rem,7vw,7rem);
+            line-height:.88; letter-spacing:.04em;
+        }
+        .hero-title span {
+            font-family:'Cormorant Garamond', serif;
+            font-style:italic; font-weight:300;
+            font-size:clamp(2.2rem,5.5vw,5.5rem);
+            color:var(--gold); display:block; line-height:1.1;
+        }
+
+        .hero-right {
+            opacity:0;
+            animation:fadeUp .8s .25s cubic-bezier(.22,1,.36,1) forwards;
+        }
+        .divider { width:28px; height:1px; background:var(--gold); margin-bottom:18px; }
+        .hero-desc {
+            font-size:clamp(.78rem,1.2vw,.88rem);
+            font-weight:300; color:rgba(240,236,230,.55);
+            line-height:1.85; margin-bottom:22px;
+        }
+        .steps { display:flex; flex-direction:column; gap:11px; }
+        .step  { display:flex; gap:13px; }
+        .step-n {
+            font-family:'Bebas Neue', sans-serif;
+            font-size:.88rem; letter-spacing:.1em;
+            color:var(--gold); line-height:1.5; min-width:20px; flex-shrink:0;
+        }
+        .step-t {
+            font-size:clamp(.72rem,1.1vw,.8rem);
+            font-weight:300; color:var(--muted); line-height:1.7;
+        }
+        .step-t strong { color:rgba(240,236,230,.68); font-weight:400; }
+
+        /* ── TICKER ── */
+        .ticker {
+            overflow:hidden; background:var(--off);
+            border-top:1px solid var(--line);
+            border-bottom:1px solid var(--line);
+            padding:10px 0;
+        }
+        .ticker-track {
+            display:flex; width:max-content;
+            animation:tickLoop 30s linear infinite;
+            will-change:transform;
+        }
+        .ticker-track span {
+            white-space:nowrap; padding:0 24px;
+            font-family:'Bebas Neue', sans-serif;
+            font-size:.9rem; letter-spacing:.2em; color:var(--muted);
+        }
+        .ticker-track .a { color:var(--gold); }
+        @keyframes tickLoop {
+            from { transform:translateX(0); }
+            to   { transform:translateX(-50%); }
+        }
+
+        /* ── CARROSSEL ── */
+        .carousel-wrap {
+            padding:clamp(30px,5vw,48px) clamp(18px,5vw,40px) clamp(36px,5vw,52px);
+            border-bottom:1px solid var(--line);
+        }
+        .c-label {
+            font-size:.58rem; letter-spacing:.28em; text-transform:uppercase;
+            color:var(--muted); margin-bottom:20px; display:block; text-align:center;
+        }
+        .c-stage {
+            position:relative;
+            width:100%; max-width:460px;
+            margin:0 auto;
+        }
+        .c-frame {
+            position:relative; width:100%;
+            aspect-ratio:3/4;
+            overflow:hidden; background:#111; border-radius:2px;
+            will-change:transform;
+        }
+        @media (max-width:480px) {
+            .c-frame { aspect-ratio:4/5; }
+        }
+
+        .c-slide {
+            position:absolute; inset:0; opacity:0;
+            transition:opacity .85s ease;
+        }
+        .c-slide.on { opacity:1; }
+
+        .c-slide img {
+            width:100%; height:100%; object-fit:cover; display:block;
+            filter:grayscale(10%) contrast(1.05);
+        }
+
+        /* placeholder quando não há foto */
+        .c-ph {
+            width:100%; height:100%;
+            background:linear-gradient(150deg,#181614,#111,#1b1916);
+            display:flex; align-items:center; justify-content:center;
+        }
+        .c-ph i {
+            font-family:'Cormorant Garamond', serif;
+            font-style:italic; font-size:1.5rem; color:#2c2925;
+        }
+
+        /* número do look */
+        .c-num {
+            position:absolute; bottom:12px; left:14px; z-index:2;
+            font-family:'Bebas Neue', sans-serif;
+            font-size:.7rem; letter-spacing:.15em;
+            color:rgba(255,255,255,.28);
+        }
+
+        /* contador ex: 1 / 8 */
+        .c-tot {
+            position:absolute; bottom:12px; right:14px; z-index:2;
+            font-size:.6rem; color:rgba(255,255,255,.2); letter-spacing:.1em;
+        }
+
+        /* barra de progresso — substitui os dots */
+        .c-prog {
+            height:2px; background:var(--line);
+            margin-top:14px; overflow:hidden; border-radius:1px;
+        }
+        .c-bar {
+            height:100%; background:var(--gold); width:0%;
+        }
+
+        /* ── BRIDGE ── */
+        .bridge {
+            display:flex; align-items:center; gap:20px;
+            padding:clamp(24px,4vw,34px) clamp(18px,5vw,40px);
+            border-bottom:1px solid var(--line);
+        }
+        .b-line { flex:1; height:1px; background:var(--line); }
+        .b-mid  { text-align:center; white-space:nowrap; }
+        .b-mid h2 {
+            font-family:'Cormorant Garamond', serif;
+            font-style:italic; font-weight:300;
+            font-size:clamp(1.2rem,3vw,2rem); margin-bottom:4px;
+        }
+        .b-mid p {
+            font-size:.62rem; letter-spacing:.2em;
+            text-transform:uppercase; color:var(--muted);
+        }
+
+        /* ── FORMULÁRIO ──
+           SOLUÇÃO DEFINITIVA DE SCROLL:
+           • scrolling="no" no iframe → zero scroll interno, zero conflito
+           • wrapper com 2200px → espaço que cobre qualquer forms multipágina
+           • a PÁGINA rola normalmente do início ao fim
+           • o forms nunca interfere com o scroll da página
+           • as respostas são guardadas normalmente pelo Google
+        ── */
+        .form-section { background:var(--cream); }
+
+        .form-head {
+            padding:clamp(16px,3vw,22px) clamp(18px,5vw,40px);
+            border-bottom:1px solid #d2cac1;
+        }
+        .form-head h3 {
+            font-family:'Bebas Neue', sans-serif;
+            font-size:clamp(1rem,2vw,1.2rem); letter-spacing:.15em; color:var(--black);
+        }
+        .form-head p {
+            font-size:clamp(.65rem,1vw,.72rem);
+            color:#8a837a; font-weight:300; margin-top:3px;
+        }
+
+        .iframe-wrap {
+            width:100%;
+            height:2200px;      /* generoso — cobre forms de múltiplas páginas */
+            overflow:hidden;
+            position:relative;
+        }
+        .iframe-wrap iframe {
+            position:absolute; inset:0;
+            width:100%; height:100%;
+            border:none;
+        }
+
+        /* ── FOOTER ── */
+        .site-footer {
+            background:var(--black);
+            border-top:1px solid var(--line);
+            padding:clamp(20px,3vw,28px) clamp(18px,5vw,40px);
+            display:flex; align-items:center; justify-content:space-between;
+            flex-wrap:wrap; gap:10px;
+        }
+        .f-copy {
+            font-size:.6rem; color:#333;
+            letter-spacing:.1em; text-transform:uppercase;
+        }
+        .f-ig {
+            display:flex; align-items:center; gap:8px;
+            text-decoration:none; color:#444;
+            transition:color .25s;
+        }
+        .f-ig:hover { color:var(--gold); }
+        .f-ig svg { width:15px; height:15px; flex-shrink:0; }
+        .f-ig span {
+            font-size:.6rem; letter-spacing:.12em; text-transform:uppercase;
+        }
+
+        /* ── ANIMAÇÃO ── */
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(14px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER — só o nome -->
+    <header class="site-header">
+        <a class="logo" href="#">VOID<span class="dot">·</span>WEAR</a>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-left">
+            <span class="eyebrow">Street Tailoring</span>
+            <h1 class="hero-title">VOID<span>Wear</span></h1>
+        </div>
+        <div class="hero-right">
+            <div class="divider"></div>
+            <p class="hero-desc">A VOID WEAR nasce da fusão entre a alfaiataria clássica e a atitude do streetwear urbano. Antes de lançarmos a nossa primeira coleção, precisamos da tua opinião para validar o conceito, os preços e os modelos.</p>
+            <div class="steps">
+                <div class="step">
+                    <span class="step-n">01</span>
+                    <span class="step-t"><strong>Explora os looks</strong> — vê as referências da coleção no carrossel abaixo.</span>
+                </div>
+                <div class="step">
+                    <span class="step-n">02</span>
+                    <span class="step-t"><strong>Responde à pesquisa</strong> — 2 minutos, anónimo, impacto real na coleção.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TICKER -->
+    <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+            <span>VOID WEAR</span><span class="a">✦</span>
+            <span>STREET TAILORING</span><span class="a">✦</span>
+            <span>SS 2025</span><span class="a">✦</span>
+            <span>ALFAIATARIA URBANA</span><span class="a">✦</span>
+            <span>PRIMEIRA COLEÇÃO</span><span class="a">✦</span>
+            <span>VALIDAÇÃO OFICIAL</span><span class="a">✦</span>
+            <span>VOID WEAR</span><span class="a">✦</span>
+            <span>STREET TAILORING</span><span class="a">✦</span>
+            <span>SS 2025</span><span class="a">✦</span>
+            <span>ALFAIATARIA URBANA</span><span class="a">✦</span>
+            <span>PRIMEIRA COLEÇÃO</span><span class="a">✦</span>
+            <span>VALIDAÇÃO OFICIAL</span><span class="a">✦</span>
+        </div>
+    </div>
+
+    <!-- CARROSSEL -->
+    <section class="carousel-wrap">
+        <span class="c-label">Lookbook — Referências da Coleção</span>
+        <div class="c-stage">
+            <div class="c-frame">
+
+                <div class="c-slide on">
+                    <img src="foto1.jpg" alt="Look 01" loading="eager"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <div class="c-ph" style="display:none"><i>01</i></div>
+                    <span class="c-num">01</span>
+                </div>
+
+                <div class="c-slide">
+                    <img src="foto2.jpg" alt="Look 02" loading="lazy"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <div class="c-ph" style="display:none"><i>02</i></div>
+                    <span class="c-num">02</span>
+                </div>
+
+                <div class="c-slide">
+                    <img src="foto3.jpg" alt="Look 03" loading="lazy"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <div class="c-ph" style="display:none"><i>03</i></div>
+                    <span class="c-num">03</span>
+                </div>
+
+                <div class="c-slide">
+                    <img src="foto4.jpg" alt="Look 04" loading="lazy"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <div class="c-ph" style="display:none"><i>04</i></div>
+                    <span class="c-num">04</span>
+                </div>
+
+                <div class="c-slide">
+                    <img src="foto5.jpg" alt="Look 05" loading="lazy"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <div class="c-ph" style="display:none"><i>05</i></div>
+                    <span class="c-num">05</span>
+                </div>
+
+                <div class="c-slide">
+                    <img src="foto6.jpg" alt="Look 06" loading="lazy"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <div class="c-ph" style="display:none"><i>06</i></div>
+                    <span class="c-num">06</span>
+                </div>
+
+                <div class="c-slide">
+                    <img src="foto7.jpg" alt="Look 07" loading="lazy"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <div class="c-ph" style="display:none"><i>07</i></div>
+                    <span class="c-num">07</span>
+                </div>
+
+                <div class="c-slide">
+                    <img src="foto8.jpg" alt="Look 08" loading="lazy"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <div class="c-ph" style="display:none"><i>08</i></div>
+                    <span class="c-num">08</span>
+                </div>
+
+                <span class="c-tot" id="cTot">1 / 8</span>
+            </div>
+
+            <!-- barra de progresso fina — sem dots/círculos -->
+            <div class="c-prog"><div class="c-bar" id="cBar"></div></div>
+        </div>
+    </section>
+
+    <!-- BRIDGE -->
+    <div class="bridge">
+        <div class="b-line"></div>
+        <div class="b-mid">
+            <h2>Agora, a tua opinião</h2>
+            <p>2 minutos · anónimo · impacto real</p>
+        </div>
+        <div class="b-line"></div>
+    </div>
+
+    <!-- FORMULÁRIO -->
+    <section class="form-section" id="pesquisa">
+        <div class="form-head">
+            <h3>PESQUISA DE VALIDAÇÃO</h3>
+            <p>Rola a página normalmente para ver e responder todas as perguntas.</p>
+        </div>
+        <div class="iframe-wrap">
+            <iframe
+                src="https://docs.google.com/forms/d/e/1FAIpQLSeCNeLn9VH1Z9sL1Qx-g3OJau1DyryepzdUMyRYtSBOcjnQHw/viewform?embedded=true"
+                scrolling="no"
+                frameborder="0"
+                marginheight="0"
+                marginwidth="0"
+                title="Pesquisa de Validação VOID WEAR">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <span class="f-copy">© 2025 — VOID WEAR · Todos os direitos reservados</span>
+        <a class="f-ig" href="https://www.instagram.com/voidwear_co/" target="_blank" rel="noopener" aria-label="Instagram VOID WEAR">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/>
+            </svg>
+            <span>@voidwear_co</span>
+        </a>
+    </footer>
+
+    <script>
+        /* ── CARROSSEL — sem dots, só barra de progresso ── */
+        const INTERVAL = 4000;
+        const slides   = Array.from(document.querySelectorAll('.c-slide'));
+        const totEl    = document.getElementById('cTot');
+        const barEl    = document.getElementById('cBar');
+        const N        = slides.length;
+        let cur        = 0;
+        let timer      = null;
+
+        function go(i) {
+            slides[cur].classList.remove('on');
+            cur = (i + N) % N;
+            slides[cur].classList.add('on');
+            totEl.textContent = (cur + 1) + ' / ' + N;
+            animBar();
+        }
+
+        function animBar() {
+            barEl.style.transition = 'none';
+            barEl.style.width = '0%';
+            barEl.getBoundingClientRect(); /* força reflow */
+            barEl.style.transition = 'width ' + INTERVAL + 'ms linear';
+            barEl.style.width = '100%';
+        }
+
+        function restart() {
+            clearInterval(timer);
+            timer = setInterval(() => go(cur + 1), INTERVAL);
+        }
+
+        animBar();
+        restart();
+
+        /* pausa ao passar o rato — só desktop */
+        const stage = document.querySelector('.c-stage');
+        stage.addEventListener('mouseenter', () => {
+            clearInterval(timer);
+            barEl.style.transition = 'none';
+            barEl.style.width = getComputedStyle(barEl).width;
+        });
+        stage.addEventListener('mouseleave', () => {
+            animBar();
+            restart();
+        });
+    </script>
+
+</body>
+</html>
