@@ -4,14 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VOID WEAR — Street Tailoring</title>
-
-    <!-- Fontes: display=swap → texto aparece imediatamente com fallback -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@1,300&family=Syne:wght@300;400&display=swap" rel="stylesheet">
-
     <style>
-        /* ── TOKENS ── */
         :root {
             --black : #060605;
             --off   : #0d0c0b;
@@ -22,33 +18,22 @@
             --line  : rgba(255,255,255,.07);
         }
 
-        /* ── RESET UNIVERSAL ── */
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-        html {
-            scroll-behavior:smooth;
-            -webkit-text-size-adjust:100%; /* evita zoom automático de fonte no iOS */
-        }
-
+        html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
         body {
             font-family:'Syne', sans-serif;
-            background:var(--black);
-            color:var(--white);
-            overflow-x:hidden;           /* sem scroll horizontal */
+            background:var(--black); color:var(--white);
+            overflow-x:hidden;
             -webkit-font-smoothing:antialiased;
             -moz-osx-font-smoothing:grayscale;
         }
-
-        /* grain decorativo — pointer-events:none garante que não bloqueia nada */
         body::after {
             content:''; position:fixed; inset:0;
             pointer-events:none; z-index:9999; opacity:.025;
             background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
-        /* ════════════════════════════════════
-           HEADER
-        ════════════════════════════════════ */
+        /* ── HEADER ── */
         .site-header {
             display:flex; align-items:center;
             padding:16px clamp(18px,5vw,40px);
@@ -62,254 +47,131 @@
         }
         .logo .dot { color:var(--gold); }
 
-        /* ════════════════════════════════════
-           HERO
-           • 2 colunas no desktop, 1 no mobile
-           • align-items:start elimina espaço vazio
-        ════════════════════════════════════ */
+        /* ── HERO ── */
         .hero {
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:clamp(16px,4vw,40px);
-            align-items:start;
+            display:grid; grid-template-columns:1fr 1fr;
+            gap:clamp(16px,4vw,40px); align-items:start;
             padding:clamp(24px,4vw,40px) clamp(18px,5vw,40px);
             border-bottom:1px solid var(--line);
         }
-        @media (max-width:580px) {
-            .hero { grid-template-columns:1fr; gap:18px; }
-        }
+        @media (max-width:580px) { .hero { grid-template-columns:1fr; gap:18px; } }
 
-        .hero-left {
-            opacity:0;
-            animation:fadeUp .8s .1s cubic-bezier(.22,1,.36,1) forwards;
-        }
-        .eyebrow {
-            font-size:.58rem; letter-spacing:.28em; text-transform:uppercase;
-            color:var(--gold); margin-bottom:8px; display:block;
-        }
-        .hero-title {
-            font-family:'Bebas Neue', sans-serif;
-            font-size:clamp(2.8rem,6vw,6rem);
-            line-height:.9; letter-spacing:.04em;
-        }
-        .hero-title span {
-            font-family:'Cormorant Garamond', serif;
-            font-style:italic; font-weight:300;
-            font-size:clamp(2.2rem,5vw,5rem);
-            color:var(--gold); display:block; line-height:1.05;
-        }
-        .hero-right {
-            opacity:0;
-            animation:fadeUp .8s .2s cubic-bezier(.22,1,.36,1) forwards;
-            padding-top:4px;
-        }
+        .hero-left { opacity:0; animation:fadeUp .8s .1s cubic-bezier(.22,1,.36,1) forwards; }
+        .eyebrow { font-size:.58rem; letter-spacing:.28em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; display:block; }
+        .hero-title { font-family:'Bebas Neue', sans-serif; font-size:clamp(2.8rem,6vw,6rem); line-height:.9; letter-spacing:.04em; }
+        .hero-title span { font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:300; font-size:clamp(2.2rem,5vw,5rem); color:var(--gold); display:block; line-height:1.05; }
+        .hero-right { opacity:0; animation:fadeUp .8s .2s cubic-bezier(.22,1,.36,1) forwards; padding-top:4px; }
         .divider { width:28px; height:1px; background:var(--gold); margin-bottom:14px; }
-        .hero-desc {
-            font-size:clamp(.8rem,1.2vw,.9rem);
-            font-weight:300; color:rgba(240,236,230,.9);
-            line-height:1.8; margin-bottom:20px;
-        }
+        .hero-desc { font-size:clamp(.8rem,1.2vw,.9rem); font-weight:300; color:rgba(240,236,230,.9); line-height:1.8; margin-bottom:20px; }
         .steps { display:flex; flex-direction:column; gap:10px; }
         .step  { display:flex; gap:12px; align-items:baseline; }
-        .step-n {
-            font-family:'Bebas Neue', sans-serif;
-            font-size:.85rem; letter-spacing:.1em;
-            color:var(--gold); min-width:20px; flex-shrink:0;
-        }
-        .step-t {
-            font-size:clamp(.75rem,1.1vw,.82rem);
-            font-weight:300; color:rgba(240,236,230,.82); line-height:1.65;
-        }
+        .step-n { font-family:'Bebas Neue', sans-serif; font-size:.85rem; letter-spacing:.1em; color:var(--gold); min-width:20px; flex-shrink:0; }
+        .step-t { font-size:clamp(.75rem,1.1vw,.82rem); font-weight:300; color:rgba(240,236,230,.82); line-height:1.65; }
         .step-t strong { color:var(--white); font-weight:400; }
 
-        /* ════════════════════════════════════
-           TICKER
-        ════════════════════════════════════ */
-        .ticker {
-            overflow:hidden; background:var(--off);
-            border-top:1px solid var(--line);
-            border-bottom:1px solid var(--line);
-            padding:9px 0;
-        }
-        .ticker-track {
-            display:flex; width:max-content;
-            animation:tickLoop 32s linear infinite;
-            will-change:transform;
-        }
-        .ticker-track span {
-            white-space:nowrap; padding:0 22px;
-            font-family:'Bebas Neue', sans-serif;
-            font-size:.85rem; letter-spacing:.18em; color:var(--muted);
-        }
+        /* ── TICKER ── */
+        .ticker { overflow:hidden; background:var(--off); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:9px 0; }
+        .ticker-track { display:flex; width:max-content; animation:tickLoop 32s linear infinite; will-change:transform; }
+        .ticker-track span { white-space:nowrap; padding:0 22px; font-family:'Bebas Neue', sans-serif; font-size:.85rem; letter-spacing:.18em; color:var(--muted); }
         .ticker-track .a { color:var(--gold); }
-        @keyframes tickLoop {
-            from { transform:translateX(0); }
-            to   { transform:translateX(-50%); }
-        }
+        @keyframes tickLoop { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
         /* ════════════════════════════════════
-           CARROSSEL IMERSIVO
-           AUDITORIA:
-           ✔ height:70vh com min/max para todos os ecrãs
-           ✔ overflow:hidden no container — nada vaza
-           ✔ slides position:absolute inset:0
-           ✔ Ken Burns só com will-change:transform (GPU)
-           ✔ backdrop-filter com prefixo -webkit- (Android)
-           ✔ swipe touch com passive:true (não trava scroll)
-           ✔ c-info-num dentro do slide (posição correta)
-           ✔ mobile: imagem fullwidth + gradiente vertical
+           LOOKBOOK — 3 colunas assíncronas
+           Cada coluna tem o seu próprio pool
+           de fotos e transição independente
         ════════════════════════════════════ */
-        .carousel-section {
-            position:relative;
-            width:100%;
-            height:70vh;
-            min-height:400px;
-            max-height:780px;
+        .lookbook {
             border-bottom:1px solid var(--line);
+        }
+
+        .lb-header {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:clamp(14px,2.5vw,22px) clamp(18px,5vw,40px);
+            border-bottom:1px solid var(--line);
+        }
+        .lb-title {
+            font-family:'Bebas Neue', sans-serif;
+            font-size:clamp(.75rem,1.5vw,.95rem);
+            letter-spacing:.2em; color:rgba(255,255,255,.35);
+        }
+        .lb-count {
+            font-size:.56rem; letter-spacing:.18em; text-transform:uppercase;
+            color:var(--muted);
+        }
+
+        /* grid das 3 colunas — sem gap para ficar encostado */
+        .lb-grid {
+            display:grid;
+            grid-template-columns:1fr 1fr 1fr;
+            gap:2px;                 /* 2px de separação muito fina */
+            background:var(--black); /* a cor do gap */
+        }
+        @media (max-width:500px) {
+            /* mobile: mostra só 1 coluna centrada */
+            .lb-grid { grid-template-columns:1fr; gap:0; }
+            .lb-col:not(:first-child) { display:none; }
+        }
+
+        /* cada coluna é uma janela para as fotos */
+        .lb-col {
+            position:relative;
+            aspect-ratio:3/4;
             overflow:hidden;
-            background:var(--black); /* fundo seguro enquanto fotos carregam */
+            background:#0a0908;
         }
 
-        /* label canto superior direito */
-        .c-label {
-            position:absolute;
-            top:clamp(14px,2.5vw,22px);
-            right:clamp(18px,4vw,40px);
-            z-index:10;
-            font-size:.54rem; letter-spacing:.24em; text-transform:uppercase;
-            color:rgba(255,255,255,.28);
-            pointer-events:none;
-        }
-
-        /* cada slide ocupa o container todo */
-        .c-slide {
+        /* cada foto dentro da coluna */
+        .lb-img {
             position:absolute; inset:0;
             opacity:0;
-            transition:opacity 1s ease;
+            transition:opacity 1.2s ease;
+            /* will-change gerido dinamicamente pelo JS — não aqui */
         }
-        .c-slide.on { opacity:1; }
+        .lb-img.on { opacity:1; }
 
-        /* wrap da imagem — lado direito (desktop) / full (mobile) */
-        .c-img-wrap {
-            position:absolute;
-            top:0; right:0;
-            width:62%; height:100%;
-            overflow:hidden;
-            will-change:transform; /* GPU layer */
-        }
-        @media (max-width:640px) {
-            .c-img-wrap { width:100%; left:0; }
-        }
-
-        /* gradiente desktop: esquerda preta → transparente */
-        .c-img-wrap::before {
-            content:'';
-            position:absolute; inset:0; z-index:1;
-            background:linear-gradient(to right, var(--black) 0%, transparent 32%);
-            pointer-events:none;
-        }
-        /* gradiente mobile: baixo preto → transparente */
-        @media (max-width:640px) {
-            .c-img-wrap::before {
-                background:linear-gradient(to top, var(--black) 0%, rgba(6,6,5,.5) 40%, transparent 65%);
-            }
-        }
-
-        .c-img-wrap img {
+        .lb-img img {
             width:100%; height:100%;
-            object-fit:cover; display:block;
-            filter:grayscale(8%) contrast(1.04);
+            object-fit:cover;
+            object-position:center top;
+            display:block;
+            filter:grayscale(5%) contrast(1.03);
             transform:scale(1.04);
-            transition:transform 6s ease;
-            will-change:transform; /* ✔ evita repaint no iOS/Android */
+            transition:transform 7s ease;
+            /* will-change:transform só faz sentido na foto activa */
         }
-        .c-slide.on .c-img-wrap img {
-            transform:scale(1); /* Ken Burns: zoom out suave ao aparecer */
-        }
+        .lb-img.on img { transform:scale(1); }
 
-        /* painel de info — lado esquerdo */
-        .c-info {
-            position:absolute;
-            left:0; top:0; bottom:0;
-            width:42%;
-            display:flex; flex-direction:column;
-            justify-content:flex-end;
-            padding:clamp(20px,4vw,48px) clamp(18px,4vw,40px);
-            z-index:2;
-            pointer-events:none;
-        }
-        @media (max-width:640px) {
-            .c-info {
-                width:100%;
-                padding:20px clamp(18px,5vw,28px);
-            }
-        }
-
-        .c-info-eyebrow {
-            font-size:.56rem; letter-spacing:.26em; text-transform:uppercase;
-            color:var(--gold); display:block;
-        }
-
-        /* número decorativo grande — dentro do slide, z-index baixo */
-        .c-num-deco {
-            font-family:'Bebas Neue', sans-serif;
-            font-size:clamp(5rem,12vw,10rem);
-            line-height:1; letter-spacing:.02em;
-            color:rgba(255,255,255,.04);
-            position:absolute;
-            bottom:clamp(16px,4vw,40px);
-            left:clamp(14px,3vw,30px);
-            z-index:1;
-            pointer-events:none;
-            user-select:none;
-        }
-        @media (max-width:640px) { .c-num-deco { display:none; } }
-
-        /* ── CONTROLOS ── */
-        .c-controls {
-            position:absolute;
-            bottom:clamp(16px,3vw,28px);
-            right:clamp(18px,4vw,40px); /* direita para não sobrepor a info */
-            z-index:10;
-            display:flex; align-items:center; gap:14px;
-        }
-
-        .c-btn {
-            width:38px; height:38px;
-            border:1px solid rgba(255,255,255,.18);
-            border-radius:50%;
-            background:rgba(0,0,0,.35);
-            -webkit-backdrop-filter:blur(6px); /* ✔ prefixo iOS/Android antigo */
-            backdrop-filter:blur(6px);
-            color:var(--white);
+        /* placeholder */
+        .lb-ph {
+            width:100%; height:100%;
+            background:linear-gradient(160deg,#161412,#0e0d0c,#181614);
             display:flex; align-items:center; justify-content:center;
-            cursor:pointer;
-            transition:border-color .25s, background .25s;
-            flex-shrink:0;
-            -webkit-tap-highlight-color:transparent; /* remove flash azul no mobile */
         }
-        .c-btn:hover  { border-color:var(--gold); background:rgba(201,169,110,.15); }
-        .c-btn:active { background:rgba(201,169,110,.25); }
-        .c-btn svg { width:13px; height:13px; pointer-events:none; }
+        .lb-ph i { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.4rem; color:#1e1c1a; }
 
-        .c-counter {
-            font-family:'Bebas Neue', sans-serif;
-            font-size:.88rem; letter-spacing:.15em;
-            color:rgba(255,255,255,.35);
-        }
-        .c-counter em { font-style:normal; color:rgba(255,255,255,.8); }
-
-        /* barra de progresso na base */
-        .c-prog-wrap {
+        /* overlay decorativo — número + label no canto de cada coluna */
+        .lb-overlay {
             position:absolute; bottom:0; left:0; right:0;
-            height:2px; background:rgba(255,255,255,.05); z-index:10;
+            padding:clamp(10px,2vw,18px);
+            background:linear-gradient(to top, rgba(6,6,5,.65) 0%, transparent 100%);
+            z-index:2; pointer-events:none;
+            display:flex; align-items:flex-end; justify-content:space-between;
         }
-        .c-prog-bar { height:100%; background:var(--gold); width:0%; }
+        .lb-num {
+            font-family:'Bebas Neue', sans-serif;
+            font-size:clamp(1.8rem,4vw,3.2rem);
+            line-height:1; color:rgba(255,255,255,.12);
+            letter-spacing:.04em;
+        }
+        .lb-tag {
+            font-size:.48rem; letter-spacing:.2em; text-transform:uppercase;
+            color:rgba(201,169,110,.5);
+            writing-mode:vertical-rl;
+            text-orientation:mixed;
+        }
 
-        /* ════════════════════════════════════
-           BRIDGE
-           white-space:normal em mobile para não sair do ecrã
-        ════════════════════════════════════ */
+        /* ── BRIDGE ── */
         .bridge {
             display:flex; align-items:center; gap:clamp(10px,3vw,20px);
             padding:clamp(20px,3vw,28px) clamp(18px,5vw,40px);
@@ -317,89 +179,80 @@
         }
         .b-line { flex:1; height:1px; background:var(--line); min-width:12px; }
         .b-mid  { text-align:center; }
-        .b-mid h2 {
-            font-family:'Cormorant Garamond', serif;
-            font-style:italic; font-weight:300;
-            font-size:clamp(1.1rem,3vw,1.9rem);
-            color:var(--white); margin-bottom:4px;
-            /* ✔ sem white-space:nowrap — adapta a ecrãs estreitos */
-        }
-        .b-mid p {
-            font-size:.6rem; letter-spacing:.16em;
-            text-transform:uppercase; color:var(--muted);
-        }
+        .b-mid h2 { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(1.1rem,3vw,1.9rem); color:var(--white); margin-bottom:4px; }
+        .b-mid p  { font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
 
-        /* ════════════════════════════════════
-           FORMULÁRIO
-           • scrolling="no" + 2200px = sem conflito de scroll
-           • respostas guardadas normalmente pelo Google
-        ════════════════════════════════════ */
+        /* ── FORMULÁRIO ── */
         .form-section { background:var(--cream); }
-
         .form-head {
             padding:clamp(14px,2.5vw,20px) clamp(18px,5vw,40px);
             border-bottom:1px solid #d2cac1;
             display:flex; align-items:center; justify-content:space-between;
             gap:12px; flex-wrap:wrap;
         }
-        .form-head h3 {
-            font-family:'Bebas Neue', sans-serif;
-            font-size:clamp(1rem,2vw,1.15rem);
-            letter-spacing:.15em; color:var(--black);
-        }
-        .form-head p { font-size:.68rem; color:#8a837a; font-weight:300; margin-top:2px; }
-        .form-badge {
-            font-size:.56rem; letter-spacing:.16em; text-transform:uppercase;
-            padding:4px 11px; border:1px solid #c0b9b0;
-            border-radius:1px; color:#8a837a; white-space:nowrap;
-        }
+        .form-head h3 { font-family:'Bebas Neue',sans-serif; font-size:clamp(1rem,2vw,1.15rem); letter-spacing:.15em; color:var(--black); }
+        .form-head p  { font-size:.68rem; color:#8a837a; font-weight:300; margin-top:2px; }
+        .form-badge   { font-size:.56rem; letter-spacing:.16em; text-transform:uppercase; padding:4px 11px; border:1px solid #c0b9b0; border-radius:1px; color:#8a837a; white-space:nowrap; }
+        .iframe-wrap  { width:100%; height:2200px; overflow:hidden; position:relative; }
+        .iframe-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
 
-        .iframe-wrap {
-            width:100%;
-            height:2200px;       /* ✔ generoso — cobre forms multipágina */
-            overflow:hidden;
-            position:relative;
-        }
-        .iframe-wrap iframe {
-            position:absolute; inset:0;
-            width:100%; height:100%; border:none;
-        }
-
-        /* ════════════════════════════════════
-           FOOTER
-        ════════════════════════════════════ */
+        /* ── FOOTER ── */
         .site-footer {
-            background:var(--black);
+            background:var(--off);
             border-top:1px solid var(--line);
-            padding:clamp(16px,2.5vw,24px) clamp(18px,5vw,40px);
-            display:flex; align-items:center; justify-content:space-between;
-            flex-wrap:wrap; gap:10px;
         }
-        .f-copy { font-size:.58rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
+
+        /* faixa superior — logo grande + instagram */
+        .f-top {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:clamp(28px,5vw,48px) clamp(18px,5vw,40px);
+            border-bottom:1px solid var(--line);
+            flex-wrap:wrap; gap:20px;
+        }
+        .f-logo {
+            font-family:'Bebas Neue', sans-serif;
+            font-size:clamp(2rem,6vw,4rem);
+            letter-spacing:.2em; color:var(--white);
+            text-decoration:none; line-height:1;
+        }
+        .f-logo .dot { color:var(--gold); }
+
         .f-ig {
-            display:flex; align-items:center; gap:8px;
-            text-decoration:none; color:var(--muted); transition:color .25s;
+            display:flex; align-items:center; gap:10px;
+            text-decoration:none; color:var(--muted);
+            transition:color .25s;
             -webkit-tap-highlight-color:transparent;
         }
         .f-ig:hover { color:var(--gold); }
-        .f-ig svg { width:15px; height:15px; flex-shrink:0; }
-        .f-ig span { font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; }
+        .f-ig svg { width:18px; height:18px; flex-shrink:0; }
+        .f-ig span { font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; }
 
-        /* ── ANIMAÇÃO DE ENTRADA ── */
-        @keyframes fadeUp {
-            from { opacity:0; transform:translateY(12px); }
-            to   { opacity:1; transform:translateY(0); }
+        /* faixa inferior — copyright + tagline */
+        .f-bottom {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:clamp(12px,2vw,18px) clamp(18px,5vw,40px);
+            flex-wrap:wrap; gap:8px;
         }
+        .f-copy {
+            font-size:.56rem; color:var(--muted);
+            letter-spacing:.1em; text-transform:uppercase;
+        }
+        .f-tag {
+            font-family:'Cormorant Garamond', serif;
+            font-style:italic; font-weight:300;
+            font-size:clamp(.75rem,1.2vw,.88rem);
+            color:rgba(255,255,255,.2);
+        }
+
+        @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
     <header class="site-header">
         <a class="logo" href="#">VOID<span class="dot">·</span>WEAR</a>
     </header>
 
-    <!-- HERO -->
     <section class="hero">
         <div class="hero-left">
             <span class="eyebrow">Street Tailoring</span>
@@ -421,7 +274,6 @@
         </div>
     </section>
 
-    <!-- TICKER -->
     <div class="ticker" aria-hidden="true">
         <div class="ticker-track">
             <span>VOID WEAR</span><span class="a">✦</span>
@@ -437,116 +289,41 @@
         </div>
     </div>
 
-    <!-- CARROSSEL IMERSIVO -->
-    <section class="carousel-section" id="lookbook">
-        <span class="c-label">Lookbook — Primeira Coleção</span>
+    <!-- LOOKBOOK — 3 colunas assíncronas -->
+    <section class="lookbook" id="lookbook">
+        <div class="lb-header">
+            <span class="lb-title">LOOKBOOK — PRIMEIRA COLEÇÃO</span>
+            <span class="lb-count">15 referências</span>
+        </div>
 
-        <!-- Slide 1 — eager: carrega imediatamente -->
-        <div class="c-slide on">
-            <div class="c-img-wrap">
-                <img src="foto1.jpg" alt="Look 01" loading="eager"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="c-ph" style="display:none"></div>
+        <div class="lb-grid">
+            <!-- COLUNA A -->
+            <div class="lb-col" id="colA">
+                <!-- fotos injetadas pelo JS -->
+                <div class="lb-overlay">
+                    <span class="lb-num" id="numA">01</span>
+                    <span class="lb-tag">Look</span>
+                </div>
             </div>
-            <div class="c-info"><span class="c-info-eyebrow">Referência da Coleção</span></div>
-            <span class="c-num-deco">01</span>
-        </div>
 
-        <!-- Slides 2–8 — lazy: só carregam quando necessário -->
-        <div class="c-slide">
-            <div class="c-img-wrap">
-                <img src="foto2.jpg" alt="Look 02" loading="lazy"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="c-ph" style="display:none"></div>
+            <!-- COLUNA B -->
+            <div class="lb-col" id="colB">
+                <div class="lb-overlay">
+                    <span class="lb-num" id="numB">06</span>
+                    <span class="lb-tag">Look</span>
+                </div>
             </div>
-            <div class="c-info"><span class="c-info-eyebrow">Referência da Coleção</span></div>
-            <span class="c-num-deco">02</span>
-        </div>
 
-        <div class="c-slide">
-            <div class="c-img-wrap">
-                <img src="foto3.jpg" alt="Look 03" loading="lazy"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="c-ph" style="display:none"></div>
+            <!-- COLUNA C -->
+            <div class="lb-col" id="colC">
+                <div class="lb-overlay">
+                    <span class="lb-num" id="numC">11</span>
+                    <span class="lb-tag">Look</span>
+                </div>
             </div>
-            <div class="c-info"><span class="c-info-eyebrow">Referência da Coleção</span></div>
-            <span class="c-num-deco">03</span>
-        </div>
-
-        <div class="c-slide">
-            <div class="c-img-wrap">
-                <img src="foto4.jpg" alt="Look 04" loading="lazy"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="c-ph" style="display:none"></div>
-            </div>
-            <div class="c-info"><span class="c-info-eyebrow">Referência da Coleção</span></div>
-            <span class="c-num-deco">04</span>
-        </div>
-
-        <div class="c-slide">
-            <div class="c-img-wrap">
-                <img src="foto5.jpg" alt="Look 05" loading="lazy"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="c-ph" style="display:none"></div>
-            </div>
-            <div class="c-info"><span class="c-info-eyebrow">Referência da Coleção</span></div>
-            <span class="c-num-deco">05</span>
-        </div>
-
-        <div class="c-slide">
-            <div class="c-img-wrap">
-                <img src="foto6.jpg" alt="Look 06" loading="lazy"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="c-ph" style="display:none"></div>
-            </div>
-            <div class="c-info"><span class="c-info-eyebrow">Referência da Coleção</span></div>
-            <span class="c-num-deco">06</span>
-        </div>
-
-        <div class="c-slide">
-            <div class="c-img-wrap">
-                <img src="foto7.jpg" alt="Look 07" loading="lazy"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="c-ph" style="display:none"></div>
-            </div>
-            <div class="c-info"><span class="c-info-eyebrow">Referência da Coleção</span></div>
-            <span class="c-num-deco">07</span>
-        </div>
-
-        <div class="c-slide">
-            <div class="c-img-wrap">
-                <img src="foto8.jpg" alt="Look 08" loading="lazy"
-                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="c-ph" style="display:none"></div>
-            </div>
-            <div class="c-info"><span class="c-info-eyebrow">Referência da Coleção</span></div>
-            <span class="c-num-deco">08</span>
-        </div>
-
-        <!-- Controlos -->
-        <div class="c-controls">
-            <button class="c-btn" id="cPrev" aria-label="Look anterior">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="15 18 9 12 15 6"/>
-                </svg>
-            </button>
-            <span class="c-counter"><em id="cCur">1</em>&thinsp;/&thinsp;<span id="cTot">8</span></span>
-            <button class="c-btn" id="cNext" aria-label="Próximo look">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"/>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Barra de progresso -->
-        <div class="c-prog-wrap">
-            <div class="c-prog-bar" id="cBar"></div>
         </div>
     </section>
 
-    <!-- BRIDGE -->
     <div class="bridge">
         <div class="b-line"></div>
         <div class="b-mid">
@@ -556,7 +333,6 @@
         <div class="b-line"></div>
     </div>
 
-    <!-- FORMULÁRIO -->
     <section class="form-section" id="pesquisa">
         <div class="form-head">
             <div>
@@ -565,114 +341,140 @@
             </div>
             <span class="form-badge">Anónimo · 2 min</span>
         </div>
-        <!--
-            scrolling="no"  → elimina scroll interno do iframe
-            height:2200px   → espaço suficiente para o forms aparecer inteiro
-            As respostas são processadas e guardadas normalmente pelo Google
-        -->
         <div class="iframe-wrap">
             <iframe
                 src="https://docs.google.com/forms/d/e/1FAIpQLSeCNeLn9VH1Z9sL1Qx-g3OJau1DyryepzdUMyRYtSBOcjnQHw/viewform?embedded=true"
-                scrolling="no"
-                frameborder="0"
-                marginheight="0"
-                marginwidth="0"
-                title="Pesquisa de Validação VOID WEAR"
-                allow="accelerometer">
+                scrolling="no" frameborder="0" marginheight="0" marginwidth="0"
+                title="Pesquisa de Validação VOID WEAR">
             </iframe>
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="site-footer">
-        <span class="f-copy">© 2025 — VOID WEAR · Todos os direitos reservados</span>
-        <a class="f-ig" href="https://www.instagram.com/voidwear_co/"
-           target="_blank" rel="noopener noreferrer" aria-label="Instagram VOID WEAR">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="1.6"
-                 stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                <circle cx="12" cy="12" r="4"/>
-                <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/>
-            </svg>
-            <span>@voidwear_co</span>
-        </a>
+        <div class="f-top">
+            <a class="f-logo" href="#">VOID<span class="dot">·</span>WEAR</a>
+            <a class="f-ig" href="https://www.instagram.com/voidwear_co/" target="_blank" rel="noopener noreferrer" aria-label="Instagram VOID WEAR">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/>
+                </svg>
+                <span>@voidwear_co</span>
+            </a>
+        </div>
+        <div class="f-bottom">
+            <span class="f-copy">© 2025 — VOID WEAR · Todos os direitos reservados</span>
+            <span class="f-tag">Street Tailoring — Primeira Coleção</span>
+        </div>
     </footer>
 
     <script>
-        (function () {
-            'use strict';
+    (function () {
+        'use strict';
 
-            var INTERVAL = 4500;
-            var slides   = Array.from(document.querySelectorAll('.c-slide'));
-            var curEl    = document.getElementById('cCur');
-            var totEl    = document.getElementById('cTot');
-            var barEl    = document.getElementById('cBar');
-            var N        = slides.length;
-            var cur      = 0;
-            var timer    = null;
+        /* ── helper: zero-pad seguro em qualquer browser ── */
+        function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
-            /* actualiza total */
-            totEl.textContent = N;
+        /*
+          15 fotos divididas em 3 pools de 5
+          Intervalos diferentes → nunca mudam ao mesmo tempo
+          Offsets de arranque → primeira mudança também assíncrona
+        */
+        var PHOTOS = [
+            'foto1.jpg','foto2.jpg','foto3.jpg','foto4.jpg','foto5.jpg',
+            'foto6.jpg','foto7.jpg','foto8.jpg','foto9.jpg','foto10.jpg',
+            'foto11.jpg','foto12.jpg','foto13.jpg','foto14.jpg','foto15.jpg'
+        ];
 
-            function go(i) {
-                slides[cur].classList.remove('on');
-                cur = ((i % N) + N) % N;   /* wrap seguro em qualquer sentido */
-                slides[cur].classList.add('on');
-                curEl.textContent = cur + 1;
-                animBar();
+        var COLS = [
+            { id:'colA', numId:'numA', pool:PHOTOS.slice(0,5),  ms:4000, offset:0    },
+            { id:'colB', numId:'numB', pool:PHOTOS.slice(5,10), ms:5500, offset:1400 },
+            { id:'colC', numId:'numC', pool:PHOTOS.slice(10),   ms:7000, offset:2600 }
+        ];
+
+        /* ── constrói imagens de cada coluna ── */
+        COLS.forEach(function (col) {
+            col.el  = document.getElementById(col.id);
+            col.num = document.getElementById(col.numId);
+            col.cur = 0;
+
+            var overlay = col.el.querySelector('.lb-overlay');
+
+            col.pool.forEach(function (src, i) {
+                var div = document.createElement('div');
+                div.className = 'lb-img' + (i === 0 ? ' on' : '');
+
+                var img = document.createElement('img');
+                img.src     = src;
+                img.alt     = 'Look ' + pad(i + 1);
+                img.loading = (i === 0) ? 'eager' : 'lazy';
+
+                var ph = document.createElement('div');
+                ph.className    = 'lb-ph';
+                ph.style.display = 'none';
+                var it = document.createElement('i');
+                it.textContent  = pad(i + 1);
+                ph.appendChild(it);
+
+                img.onerror = function () {
+                    this.style.display = 'none';
+                    ph.style.display   = 'flex';
+                };
+
+                div.appendChild(img);
+                div.appendChild(ph);
+                col.el.insertBefore(div, overlay);
+            });
+
+            col.imgs = col.el.querySelectorAll('.lb-img');
+
+            /* will-change só na imagem activa — poupa memória GPU */
+            col.imgs[0].style.willChange = 'opacity';
+            var firstImg = col.imgs[0].querySelector('img');
+            if (firstImg) firstImg.style.willChange = 'transform';
+        });
+
+        /* ── avança uma coluna ── */
+        function advance(col) {
+            var prev = col.imgs[col.cur];
+            prev.style.willChange = 'auto';
+            prev.querySelector('img') && (prev.querySelector('img').style.willChange = 'auto');
+            prev.classList.remove('on');
+
+            col.cur = (col.cur + 1) % col.pool.length;
+
+            var next = col.imgs[col.cur];
+            next.style.willChange = 'opacity';
+            next.querySelector('img') && (next.querySelector('img').style.willChange = 'transform');
+            next.classList.add('on');
+            col.num.textContent = pad(col.cur + 1);
+        }
+
+        /* ── arranca cada coluna com offset e guarda timer para limpeza ── */
+        COLS.forEach(function (col) {
+            col.timer = null;
+            setTimeout(function () {
+                col.timer = setInterval(function () { advance(col); }, col.ms);
+            }, col.offset);
+        });
+
+        /*
+          Pausa animações quando o separador fica em segundo plano
+          → poupa bateria e evita acumulação de timers no mobile
+        */
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                COLS.forEach(function (c) { clearInterval(c.timer); c.timer = null; });
+            } else {
+                COLS.forEach(function (c) {
+                    if (!c.timer) {
+                        c.timer = setInterval(function () { advance(c); }, c.ms);
+                    }
+                });
             }
+        });
 
-            function animBar() {
-                barEl.style.transition = 'none';
-                barEl.style.width = '0%';
-                /* força reflow — necessário para reiniciar a animação */
-                void barEl.getBoundingClientRect();
-                barEl.style.transition = 'width ' + INTERVAL + 'ms linear';
-                barEl.style.width = '100%';
-            }
-
-            function restart() {
-                clearInterval(timer);
-                timer = setInterval(function () { go(cur + 1); }, INTERVAL);
-            }
-
-            /* botões */
-            document.getElementById('cNext').addEventListener('click', function () {
-                go(cur + 1); restart();
-            });
-            document.getElementById('cPrev').addEventListener('click', function () {
-                go(cur - 1); restart();
-            });
-
-            /* pausa ao passar o rato (desktop) */
-            var section = document.querySelector('.carousel-section');
-            section.addEventListener('mouseenter', function () {
-                clearInterval(timer);
-                barEl.style.transition = 'none';
-                barEl.style.width = getComputedStyle(barEl).width;
-            });
-            section.addEventListener('mouseleave', function () {
-                animBar(); restart();
-            });
-
-            /* swipe no mobile — passive:true garante que NÃO trava o scroll da página */
-            var touchStartX = 0;
-            section.addEventListener('touchstart', function (e) {
-                touchStartX = e.touches[0].clientX;
-            }, { passive: true });
-            section.addEventListener('touchend', function (e) {
-                var diff = touchStartX - e.changedTouches[0].clientX;
-                if (Math.abs(diff) > 44) {          /* limiar de 44px */
-                    go(diff > 0 ? cur + 1 : cur - 1);
-                    restart();
-                }
-            }, { passive: true });
-
-            /* inicia */
-            animBar();
-            restart();
-        }());
+    }());
     </script>
 
 </body>
