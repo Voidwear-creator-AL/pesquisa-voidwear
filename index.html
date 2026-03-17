@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@1,300&family=Syne:wght@300;400&display=swap" rel="stylesheet">
     <style>
+        /* ── TOKENS ── */
         :root {
             --black : #060605;
             --off   : #0d0c0b;
@@ -18,6 +19,7 @@
             --line  : rgba(255,255,255,.07);
         }
 
+        /* ── RESET ── */
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
         body {
@@ -27,13 +29,17 @@
             -webkit-font-smoothing:antialiased;
             -moz-osx-font-smoothing:grayscale;
         }
+
+        /* grain decorativo — não bloqueia nenhuma interação */
         body::after {
             content:''; position:fixed; inset:0;
             pointer-events:none; z-index:9999; opacity:.025;
             background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
-        /* ── HEADER ── */
+        /* ════════════════════════════════════
+           HEADER
+        ════════════════════════════════════ */
         .site-header {
             display:flex; align-items:center;
             padding:16px clamp(18px,5vw,40px);
@@ -47,7 +53,9 @@
         }
         .logo .dot { color:var(--gold); }
 
-        /* ── HERO ── */
+        /* ════════════════════════════════════
+           HERO
+        ════════════════════════════════════ */
         .hero {
             display:grid; grid-template-columns:1fr 1fr;
             gap:clamp(16px,4vw,40px); align-items:start;
@@ -57,33 +65,64 @@
         @media (max-width:580px) { .hero { grid-template-columns:1fr; gap:18px; } }
 
         .hero-left { opacity:0; animation:fadeUp .8s .1s cubic-bezier(.22,1,.36,1) forwards; }
-        .eyebrow { font-size:.58rem; letter-spacing:.28em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; display:block; }
-        .hero-title { font-family:'Bebas Neue', sans-serif; font-size:clamp(2.8rem,6vw,6rem); line-height:.9; letter-spacing:.04em; }
-        .hero-title span { font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:300; font-size:clamp(2.2rem,5vw,5rem); color:var(--gold); display:block; line-height:1.05; }
+        .eyebrow {
+            font-size:.58rem; letter-spacing:.28em; text-transform:uppercase;
+            color:var(--gold); margin-bottom:8px; display:block;
+        }
+        .hero-title {
+            font-family:'Bebas Neue', sans-serif;
+            font-size:clamp(2.8rem,6vw,6rem); line-height:.9; letter-spacing:.04em;
+        }
+        .hero-title span {
+            font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:300;
+            font-size:clamp(2.2rem,5vw,5rem); color:var(--gold); display:block; line-height:1.05;
+        }
         .hero-right { opacity:0; animation:fadeUp .8s .2s cubic-bezier(.22,1,.36,1) forwards; padding-top:4px; }
         .divider { width:28px; height:1px; background:var(--gold); margin-bottom:14px; }
-        .hero-desc { font-size:clamp(.8rem,1.2vw,.9rem); font-weight:300; color:rgba(240,236,230,.9); line-height:1.8; margin-bottom:20px; }
+        .hero-desc {
+            font-size:clamp(.8rem,1.2vw,.9rem); font-weight:300;
+            color:rgba(240,236,230,.9); line-height:1.8; margin-bottom:20px;
+        }
         .steps { display:flex; flex-direction:column; gap:10px; }
         .step  { display:flex; gap:12px; align-items:baseline; }
-        .step-n { font-family:'Bebas Neue', sans-serif; font-size:.85rem; letter-spacing:.1em; color:var(--gold); min-width:20px; flex-shrink:0; }
+        .step-n {
+            font-family:'Bebas Neue', sans-serif; font-size:.85rem;
+            letter-spacing:.1em; color:var(--gold); min-width:20px; flex-shrink:0;
+        }
         .step-t { font-size:clamp(.75rem,1.1vw,.82rem); font-weight:300; color:rgba(240,236,230,.82); line-height:1.65; }
         .step-t strong { color:var(--white); font-weight:400; }
 
-        /* ── TICKER ── */
-        .ticker { overflow:hidden; background:var(--off); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:9px 0; }
-        .ticker-track { display:flex; width:max-content; animation:tickLoop 32s linear infinite; will-change:transform; }
-        .ticker-track span { white-space:nowrap; padding:0 22px; font-family:'Bebas Neue', sans-serif; font-size:.85rem; letter-spacing:.18em; color:var(--muted); }
+        /* ════════════════════════════════════
+           TICKER
+        ════════════════════════════════════ */
+        .ticker {
+            overflow:hidden; background:var(--off);
+            border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+            padding:9px 0;
+        }
+        .ticker-track {
+            display:flex; width:max-content;
+            animation:tickLoop 32s linear infinite;
+            will-change:transform;
+        }
+        .ticker-track span {
+            white-space:nowrap; padding:0 22px;
+            font-family:'Bebas Neue', sans-serif;
+            font-size:.85rem; letter-spacing:.18em; color:var(--muted);
+        }
         .ticker-track .a { color:var(--gold); }
         @keyframes tickLoop { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
         /* ════════════════════════════════════
            LOOKBOOK — 3 colunas assíncronas
-           Cada coluna tem o seu próprio pool
-           de fotos e transição independente
+           ✔ 13 fotos: pools 5 + 4 + 4
+           ✔ object-fit:cover + object-position:center center
+             → foto centrada, corte igual em cima e em baixo
+           ✔ scale:1.02 — Ken Burns subtil, sem corte excessivo
+           ✔ will-change gerido dinamicamente pelo JS
+           ✔ overflow:hidden no .lb-col — nada vaza
         ════════════════════════════════════ */
-        .lookbook {
-            border-bottom:1px solid var(--line);
-        }
+        .lookbook { border-bottom:1px solid var(--line); }
 
         .lb-header {
             display:flex; align-items:center; justify-content:space-between;
@@ -95,25 +134,20 @@
             font-size:clamp(.75rem,1.5vw,.95rem);
             letter-spacing:.2em; color:rgba(255,255,255,.35);
         }
-        .lb-count {
-            font-size:.56rem; letter-spacing:.18em; text-transform:uppercase;
-            color:var(--muted);
-        }
+        .lb-count { font-size:.56rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); }
 
-        /* grid das 3 colunas — sem gap para ficar encostado */
         .lb-grid {
             display:grid;
             grid-template-columns:1fr 1fr 1fr;
-            gap:2px;                 /* 2px de separação muito fina */
-            background:var(--black); /* a cor do gap */
+            gap:2px;
+            background:var(--black);
         }
         @media (max-width:500px) {
-            /* mobile: mostra só 1 coluna centrada */
             .lb-grid { grid-template-columns:1fr; gap:0; }
             .lb-col:not(:first-child) { display:none; }
         }
 
-        /* cada coluna é uma janela para as fotos */
+        /* ✔ overflow:hidden garante que nenhuma foto vaza para fora */
         .lb-col {
             position:relative;
             aspect-ratio:3/4;
@@ -121,28 +155,32 @@
             background:#0a0908;
         }
 
-        /* cada foto dentro da coluna */
         .lb-img {
             position:absolute; inset:0;
             opacity:0;
             transition:opacity 1.2s ease;
-            /* will-change gerido dinamicamente pelo JS — não aqui */
+            /* will-change gerido pelo JS — não aqui */
         }
         .lb-img.on { opacity:1; }
 
         .lb-img img {
             width:100%; height:100%;
             object-fit:cover;
-            object-position:center top;
+            /* ✔ center center — centra a foto verticalmente
+               garante que nem o topo nem o fundo são cortados
+               mais do que o necessário — funciona para qualquer
+               proporção de foto enviada */
+            object-position:center center;
             display:block;
             filter:grayscale(5%) contrast(1.03);
-            transform:scale(1.04);
+            /* ✔ scale reduzido de 1.04 → 1.02
+               Ken Burns mais subtil, menos corte nas bordas */
+            transform:scale(1.02);
             transition:transform 7s ease;
-            /* will-change:transform só faz sentido na foto activa */
         }
         .lb-img.on img { transform:scale(1); }
 
-        /* placeholder */
+        /* placeholder escuro quando a foto não existe */
         .lb-ph {
             width:100%; height:100%;
             background:linear-gradient(160deg,#161412,#0e0d0c,#181614);
@@ -150,7 +188,7 @@
         }
         .lb-ph i { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.4rem; color:#1e1c1a; }
 
-        /* overlay decorativo — número + label no canto de cada coluna */
+        /* overlay com número decorativo */
         .lb-overlay {
             position:absolute; bottom:0; left:0; right:0;
             padding:clamp(10px,2vw,18px);
@@ -161,17 +199,17 @@
         .lb-num {
             font-family:'Bebas Neue', sans-serif;
             font-size:clamp(1.8rem,4vw,3.2rem);
-            line-height:1; color:rgba(255,255,255,.12);
-            letter-spacing:.04em;
+            line-height:1; color:rgba(255,255,255,.12); letter-spacing:.04em;
         }
         .lb-tag {
             font-size:.48rem; letter-spacing:.2em; text-transform:uppercase;
             color:rgba(201,169,110,.5);
-            writing-mode:vertical-rl;
-            text-orientation:mixed;
+            writing-mode:vertical-rl; text-orientation:mixed;
         }
 
-        /* ── BRIDGE ── */
+        /* ════════════════════════════════════
+           BRIDGE
+        ════════════════════════════════════ */
         .bridge {
             display:flex; align-items:center; gap:clamp(10px,3vw,20px);
             padding:clamp(20px,3vw,28px) clamp(18px,5vw,40px);
@@ -179,10 +217,19 @@
         }
         .b-line { flex:1; height:1px; background:var(--line); min-width:12px; }
         .b-mid  { text-align:center; }
-        .b-mid h2 { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(1.1rem,3vw,1.9rem); color:var(--white); margin-bottom:4px; }
-        .b-mid p  { font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
+        .b-mid h2 {
+            font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;
+            font-size:clamp(1.1rem,3vw,1.9rem); color:var(--white); margin-bottom:4px;
+        }
+        .b-mid p { font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
 
-        /* ── FORMULÁRIO ── */
+        /* ════════════════════════════════════
+           FORMULÁRIO
+           ✔ scrolling="no" + height:3200px
+             → sem scroll interno, sem conflito,
+               forms aparece inteiro, respostas
+               guardadas normalmente pelo Google
+        ════════════════════════════════════ */
         .form-section { background:var(--cream); }
         .form-head {
             padding:clamp(14px,2.5vw,20px) clamp(18px,5vw,40px);
@@ -190,19 +237,26 @@
             display:flex; align-items:center; justify-content:space-between;
             gap:12px; flex-wrap:wrap;
         }
-        .form-head h3 { font-family:'Bebas Neue',sans-serif; font-size:clamp(1rem,2vw,1.15rem); letter-spacing:.15em; color:var(--black); }
+        .form-head h3 {
+            font-family:'Bebas Neue',sans-serif;
+            font-size:clamp(1rem,2vw,1.15rem); letter-spacing:.15em; color:var(--black);
+        }
         .form-head p  { font-size:.68rem; color:#8a837a; font-weight:300; margin-top:2px; }
-        .form-badge   { font-size:.56rem; letter-spacing:.16em; text-transform:uppercase; padding:4px 11px; border:1px solid #c0b9b0; border-radius:1px; color:#8a837a; white-space:nowrap; }
-        .iframe-wrap  { width:100%; height:3200px; overflow:hidden; position:relative; }
+        .form-badge {
+            font-size:.56rem; letter-spacing:.16em; text-transform:uppercase;
+            padding:4px 11px; border:1px solid #c0b9b0;
+            border-radius:1px; color:#8a837a; white-space:nowrap;
+        }
+        .iframe-wrap { width:100%; height:3200px; overflow:hidden; position:relative; }
         .iframe-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
 
-        /* ── FOOTER ── */
+        /* ════════════════════════════════════
+           FOOTER
+        ════════════════════════════════════ */
         .site-footer {
             background:var(--off);
             border-top:1px solid var(--line);
         }
-
-        /* faixa superior — logo grande + instagram */
         .f-top {
             display:flex; align-items:center; justify-content:space-between;
             padding:clamp(28px,5vw,48px) clamp(18px,5vw,40px);
@@ -216,43 +270,39 @@
             text-decoration:none; line-height:1;
         }
         .f-logo .dot { color:var(--gold); }
-
         .f-ig {
             display:flex; align-items:center; gap:10px;
             text-decoration:none; color:var(--muted);
-            transition:color .25s;
-            -webkit-tap-highlight-color:transparent;
+            transition:color .25s; -webkit-tap-highlight-color:transparent;
         }
         .f-ig:hover { color:var(--gold); }
         .f-ig svg { width:18px; height:18px; flex-shrink:0; }
         .f-ig span { font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; }
-
-        /* faixa inferior — copyright + tagline */
         .f-bottom {
             display:flex; align-items:center; justify-content:space-between;
             padding:clamp(12px,2vw,18px) clamp(18px,5vw,40px);
             flex-wrap:wrap; gap:8px;
         }
-        .f-copy {
-            font-size:.56rem; color:var(--muted);
-            letter-spacing:.1em; text-transform:uppercase;
-        }
+        .f-copy { font-size:.56rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
         .f-tag {
-            font-family:'Cormorant Garamond', serif;
-            font-style:italic; font-weight:300;
-            font-size:clamp(.75rem,1.2vw,.88rem);
-            color:rgba(255,255,255,.2);
+            font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:300;
+            font-size:clamp(.75rem,1.2vw,.88rem); color:rgba(255,255,255,.2);
         }
 
-        @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(12px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
     </style>
 </head>
 <body>
 
+    <!-- HEADER -->
     <header class="site-header">
         <a class="logo" href="#">VOID<span class="dot">·</span>WEAR</a>
     </header>
 
+    <!-- HERO -->
     <section class="hero">
         <div class="hero-left">
             <span class="eyebrow">Street Tailoring</span>
@@ -260,20 +310,21 @@
         </div>
         <div class="hero-right">
             <div class="divider"></div>
-            <p class="hero-desc">A VOID WEAR nasce da fusão entre a alfaiataria clássica e a atitude do streetwear urbano. Antes de lançarmos a nossa primeira coleção, precisamos da tua opinião para validar o conceito, os preços e os modelos.</p>
+            <p class="hero-desc">A VOID WEAR nasce da fusão entre a alfaiataria clássica e a atitude do streetwear urbano. Estamos a construir a nossa primeira coleção para o publico masculino — e queremos a tua opinião antes de lançar.</p>
             <div class="steps">
                 <div class="step">
                     <span class="step-n">01</span>
-                    <span class="step-t"><strong>Explora os looks</strong> — vê as referências da coleção no carrossel abaixo.</span>
+                    <span class="step-t"><strong>Vê os looks</strong> — referências do estilo que estamos a construir.</span>
                 </div>
                 <div class="step">
                     <span class="step-n">02</span>
-                    <span class="step-t"><strong>Responde à pesquisa</strong> — 2 minutos, anónimo, impacto real na coleção.</span>
+                    <span class="step-t"><strong>Responde à pesquisa</strong> — só para homens de Maceió. 2 minutos, anónimo.</span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- TICKER -->
     <div class="ticker" aria-hidden="true">
         <div class="ticker-track">
             <span>VOID WEAR</span><span class="a">✦</span>
@@ -289,57 +340,52 @@
         </div>
     </div>
 
-    <!-- LOOKBOOK — 3 colunas assíncronas -->
+    <!-- LOOKBOOK — 3 colunas, 13 fotos -->
     <section class="lookbook" id="lookbook">
         <div class="lb-header">
             <span class="lb-title">LOOKBOOK — PRIMEIRA COLEÇÃO</span>
-            <span class="lb-count">15 referências</span>
+            <span class="lb-count">13 referências</span>
         </div>
-
         <div class="lb-grid">
-            <!-- COLUNA A -->
             <div class="lb-col" id="colA">
-                <!-- fotos injetadas pelo JS -->
                 <div class="lb-overlay">
                     <span class="lb-num" id="numA">01</span>
                     <span class="lb-tag">Look</span>
                 </div>
             </div>
-
-            <!-- COLUNA B -->
             <div class="lb-col" id="colB">
                 <div class="lb-overlay">
                     <span class="lb-num" id="numB">06</span>
                     <span class="lb-tag">Look</span>
                 </div>
             </div>
-
-            <!-- COLUNA C -->
             <div class="lb-col" id="colC">
                 <div class="lb-overlay">
-                    <span class="lb-num" id="numC">11</span>
+                    <span class="lb-num" id="numC">10</span>
                     <span class="lb-tag">Look</span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- BRIDGE -->
     <div class="bridge">
         <div class="b-line"></div>
         <div class="b-mid">
-            <h2>A tua opinião constrói a marca</h2>
-            <p>2 minutos · anónimo · impacto real</p>
+            <h2>A tua opinião define a coleção</h2>
+            <p>Exclusivo para homens de Maceió · 3 minutos</p>
         </div>
         <div class="b-line"></div>
     </div>
 
+    <!-- FORMULÁRIO -->
     <section class="form-section" id="pesquisa">
         <div class="form-head">
             <div>
                 <h3>PESQUISA DE VALIDAÇÃO</h3>
-                <p>Preenche abaixo — rola a página normalmente entre as perguntas.</p>
+                <p>Para homens de Maceió — rola normalmente entre as perguntas.</p>
             </div>
-            <span class="form-badge">Anónimo · 2 min</span>
+            <span class="form-badge">Masculino · Maceió · 3 min</span>
         </div>
         <div class="iframe-wrap">
             <iframe
@@ -350,11 +396,14 @@
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="f-top">
-            <a class="f-logo" href="#">VOID<span class="dot">·</span>WEAR</a>
-            <a class="f-ig" href="https://www.instagram.com/voidwear_co/" target="_blank" rel="noopener noreferrer" aria-label="Instagram VOID WEAR">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <a class="f-logo" href="#">VOID<span class="dot"> </span>WEAR</a>
+            <a class="f-ig" href="https://www.instagram.com/voidwear_co/"
+               target="_blank" rel="noopener noreferrer" aria-label="Instagram VOID WEAR">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                     <circle cx="12" cy="12" r="4"/>
                     <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/>
@@ -372,27 +421,27 @@
     (function () {
         'use strict';
 
-        /* ── helper: zero-pad seguro em qualquer browser ── */
+        /* zero-pad compatível com todos os browsers */
         function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
         /*
-          15 fotos divididas em 3 pools de 5
-          Intervalos diferentes → nunca mudam ao mesmo tempo
+          13 fotos divididas em 3 pools: 5 + 4 + 4
+          Intervalos diferentes → colunas nunca mudam ao mesmo tempo
           Offsets de arranque → primeira mudança também assíncrona
         */
         var PHOTOS = [
             'foto1.jpg','foto2.jpg','foto3.jpg','foto4.jpg','foto5.jpg',
-            'foto6.jpg','foto7.jpg','foto8.jpg','foto9.jpg','foto10.jpg',
-            'foto11.jpg','foto12.jpg','foto13.jpg','foto14.jpg','foto15.jpg'
+            'foto6.jpg','foto7.jpg','foto8.jpg','foto9.jpg',
+            'foto10.jpg','foto11.jpg','foto12.jpg','foto13.jpg'
         ];
 
         var COLS = [
             { id:'colA', numId:'numA', pool:PHOTOS.slice(0,5),  ms:4000, offset:0    },
-            { id:'colB', numId:'numB', pool:PHOTOS.slice(5,10), ms:5500, offset:1400 },
-            { id:'colC', numId:'numC', pool:PHOTOS.slice(10),   ms:7000, offset:2600 }
+            { id:'colB', numId:'numB', pool:PHOTOS.slice(5,9),  ms:5500, offset:1400 },
+            { id:'colC', numId:'numC', pool:PHOTOS.slice(9,13), ms:7000, offset:2600 }
         ];
 
-        /* ── constrói imagens de cada coluna ── */
+        /* constrói os elementos de imagem para cada coluna */
         COLS.forEach(function (col) {
             col.el  = document.getElementById(col.id);
             col.num = document.getElementById(col.numId);
@@ -410,10 +459,10 @@
                 img.loading = (i === 0) ? 'eager' : 'lazy';
 
                 var ph = document.createElement('div');
-                ph.className    = 'lb-ph';
+                ph.className     = 'lb-ph';
                 ph.style.display = 'none';
                 var it = document.createElement('i');
-                it.textContent  = pad(i + 1);
+                it.textContent = pad(i + 1);
                 ph.appendChild(it);
 
                 img.onerror = function () {
@@ -428,29 +477,31 @@
 
             col.imgs = col.el.querySelectorAll('.lb-img');
 
-            /* will-change só na imagem activa — poupa memória GPU */
+            /* will-change só na foto activa — poupa memória GPU */
             col.imgs[0].style.willChange = 'opacity';
-            var firstImg = col.imgs[0].querySelector('img');
-            if (firstImg) firstImg.style.willChange = 'transform';
+            var fi = col.imgs[0].querySelector('img');
+            if (fi) fi.style.willChange = 'transform';
         });
 
-        /* ── avança uma coluna ── */
+        /* avança a foto de uma coluna */
         function advance(col) {
             var prev = col.imgs[col.cur];
             prev.style.willChange = 'auto';
-            prev.querySelector('img') && (prev.querySelector('img').style.willChange = 'auto');
+            var pi = prev.querySelector('img');
+            if (pi) pi.style.willChange = 'auto';
             prev.classList.remove('on');
 
             col.cur = (col.cur + 1) % col.pool.length;
 
             var next = col.imgs[col.cur];
             next.style.willChange = 'opacity';
-            next.querySelector('img') && (next.querySelector('img').style.willChange = 'transform');
+            var ni = next.querySelector('img');
+            if (ni) ni.style.willChange = 'transform';
             next.classList.add('on');
             col.num.textContent = pad(col.cur + 1);
         }
 
-        /* ── arranca cada coluna com offset e guarda timer para limpeza ── */
+        /* arranca cada coluna com o seu offset */
         COLS.forEach(function (col) {
             col.timer = null;
             setTimeout(function () {
@@ -459,8 +510,8 @@
         });
 
         /*
-          Pausa animações quando o separador fica em segundo plano
-          → poupa bateria e evita acumulação de timers no mobile
+          Pausa quando o separador vai para segundo plano
+          → poupa bateria no mobile, evita acumulação de timers
         */
         document.addEventListener('visibilitychange', function () {
             if (document.hidden) {
