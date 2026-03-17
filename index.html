@@ -353,13 +353,15 @@
         }
         .gal-overlay.open { opacity:1; pointer-events:all; }
 
-        /* caixa do modal */
+        /* caixa do modal — altura total explícita */
         .gal-modal {
             background:var(--off);
             border:1px solid var(--line);
             border-radius:2px;
-            width:100%; max-width:900px;
-            max-height:92vh;
+            width:100%; max-width:860px;
+            /* altura fixa calculada: 100vh menos padding do overlay */
+            height:calc(100vh - clamp(16px,4vw,32px));
+            max-height:calc(100vh - clamp(16px,4vw,32px));
             display:flex; flex-direction:column;
             transform:translateY(14px);
             transition:transform .3s ease;
@@ -373,6 +375,7 @@
             padding:13px clamp(16px,3vw,24px);
             border-bottom:1px solid var(--line);
             flex-shrink:0;
+            height:48px; /* altura fixa — ajuda o cálculo do flex abaixo */
         }
         .gal-head-title {
             font-family:'Bebas Neue', sans-serif;
@@ -393,19 +396,17 @@
         .gal-close-btn:hover { border-color:var(--gold); color:var(--gold); }
         .gal-close-btn svg { width:13px; height:13px; pointer-events:none; }
 
-        /* grelha → carrossel */
+        /* área da foto — ocupa todo o espaço restante */
         .gal-grid {
             position:relative;
-            flex:1 1 auto;
+            flex:1 1 0%;       /* 0% base — expande para preencher */
             overflow:hidden;
             background:var(--black);
-            min-height:300px;  /* garante altura mínima em qualquer browser */
-            height:60vh;       /* altura explícita — iOS Safari não colapsa */
         }
 
         .gal-slide {
             position:absolute;
-            top:0; left:0; right:0; bottom:0; /* inset explícito — mais compatível */
+            top:0; left:0; right:0; bottom:0;
             opacity:0;
             transition:opacity .5s ease;
             display:flex; align-items:center; justify-content:center;
@@ -414,14 +415,14 @@
         .gal-slide.on { opacity:1; }
 
         .gal-slide img {
+            /* ✔ foto inteira, sem corte, centrada */
             max-width:100%; max-height:100%;
             width:auto; height:auto;
-            object-fit:contain;
             display:block;
             filter:grayscale(5%) contrast(1.03);
         }
 
-        /* placeholder se foto não existir */
+        /* placeholder */
         .gal-slide-ph {
             width:100%; height:100%;
             background:linear-gradient(160deg,#161412,#0e0d0c,#181614);
@@ -432,13 +433,14 @@
             font-style:italic; font-size:2rem; color:#2a2724;
         }
 
-        /* controlos do carrossel dentro do modal */
+        /* controlos */
         .gal-controls {
             display:flex; align-items:center; justify-content:center;
             gap:20px;
             padding:12px clamp(16px,3vw,24px);
             border-top:1px solid var(--line);
             flex-shrink:0;
+            height:62px;
         }
         .gal-arrow {
             width:38px; height:38px;
@@ -465,7 +467,6 @@
         }
         .gal-counter em { font-style:normal; color:rgba(255,255,255,.8); }
 
-        /* barra de progresso fina — mais larga agora que é só uma */
         .gal-prog {
             height:2px; background:rgba(255,255,255,.06);
             flex:1; max-width:240px;
@@ -478,7 +479,9 @@
             display:flex; align-items:center; justify-content:space-between;
             padding:10px clamp(16px,3vw,24px);
             border-top:1px solid var(--line);
-            flex-shrink:0; flex-wrap:wrap; gap:6px;
+            flex-shrink:0;
+            height:44px;
+            flex-wrap:wrap; gap:6px;
         }
         .gal-foot-info {
             font-size:.58rem; letter-spacing:.14em;
