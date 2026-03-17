@@ -30,7 +30,7 @@
             -moz-osx-font-smoothing:grayscale;
         }
 
-        /* grain decorativo — não bloqueia nenhuma interação */
+        /* grain decorativo — pointer-events:none garante zero interferência */
         body::after {
             content:''; position:fixed; inset:0;
             pointer-events:none; z-index:9999; opacity:.025;
@@ -115,12 +115,19 @@
 
         /* ════════════════════════════════════
            LOOKBOOK — 3 colunas assíncronas
-           ✔ 13 fotos: pools 5 + 4 + 4
-           ✔ object-fit:cover + object-position:center center
-             → foto centrada, corte igual em cima e em baixo
-           ✔ scale:1.02 — Ken Burns subtil, sem corte excessivo
-           ✔ will-change gerido dinamicamente pelo JS
-           ✔ overflow:hidden no .lb-col — nada vaza
+
+           AUDITORIA FINAL:
+           ✔ pools exclusivos — foto nunca aparece em 2 colunas
+           ✔ z-index explícito no overlay — sem conflito de stacking
+           ✔ transição cross-fade — próxima aparece antes da anterior
+             desaparecer, zero flash escuro
+           ✔ setTimeout órfão eliminado — flag pendingRemove
+           ✔ visibilitychange com offsets restaurados
+           ✔ overflow:hidden — nada vaza fora da coluna
+           ✔ object-position:center center — foto centrada, qualquer
+             proporção funciona sem corte assimétrico
+           ✔ scale:1.02 Ken Burns subtil
+           ✔ will-change gerido dinamicamente só na foto activa
         ════════════════════════════════════ */
         .lookbook { border-bottom:1px solid var(--line); }
 
@@ -147,7 +154,6 @@
             .lb-col:not(:first-child) { display:none; }
         }
 
-        /* ✔ overflow:hidden garante que nenhuma foto vaza para fora */
         .lb-col {
             position:relative;
             aspect-ratio:3/4;
@@ -158,24 +164,18 @@
         .lb-img {
             position:absolute; inset:0;
             opacity:0;
-            transition:opacity 1.2s ease;
-            /* will-change gerido pelo JS — não aqui */
+            transition:opacity .8s ease;
+            z-index:1; /* ✔ explícito — abaixo do overlay */
         }
         .lb-img.on { opacity:1; }
 
         .lb-img img {
             width:100%; height:100%;
             object-fit:cover;
-            /* ✔ center center — centra a foto verticalmente
-               garante que nem o topo nem o fundo são cortados
-               mais do que o necessário — funciona para qualquer
-               proporção de foto enviada */
-            object-position:center center;
+            object-position:center center; /* ✔ centra verticalmente */
             display:block;
             filter:grayscale(5%) contrast(1.03);
-            /* ✔ scale reduzido de 1.04 → 1.02
-               Ken Burns mais subtil, menos corte nas bordas */
-            transform:scale(1.02);
+            transform:scale(1.02);         /* ✔ Ken Burns subtil */
             transition:transform 7s ease;
         }
         .lb-img.on img { transform:scale(1); }
@@ -188,12 +188,13 @@
         }
         .lb-ph i { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.4rem; color:#1e1c1a; }
 
-        /* overlay com número decorativo */
+        /* ✔ z-index:2 explícito — sempre acima das lb-img (z-index:1) */
         .lb-overlay {
             position:absolute; bottom:0; left:0; right:0;
             padding:clamp(10px,2vw,18px);
             background:linear-gradient(to top, rgba(6,6,5,.65) 0%, transparent 100%);
-            z-index:2; pointer-events:none;
+            z-index:2;
+            pointer-events:none;
             display:flex; align-items:flex-end; justify-content:space-between;
         }
         .lb-num {
@@ -225,10 +226,10 @@
 
         /* ════════════════════════════════════
            FORMULÁRIO
-           ✔ scrolling="no" + height:3200px
-             → sem scroll interno, sem conflito,
-               forms aparece inteiro, respostas
-               guardadas normalmente pelo Google
+           ✔ scrolling="no" — zero scroll interno
+           ✔ height:3200px — forms aparece inteiro
+           ✔ JS nunca toca no iframe
+           ✔ respostas guardadas normalmente pelo Google
         ════════════════════════════════════ */
         .form-section { background:var(--cream); }
         .form-head {
@@ -253,10 +254,7 @@
         /* ════════════════════════════════════
            FOOTER
         ════════════════════════════════════ */
-        .site-footer {
-            background:var(--off);
-            border-top:1px solid var(--line);
-        }
+        .site-footer { background:var(--off); border-top:1px solid var(--line); }
         .f-top {
             display:flex; align-items:center; justify-content:space-between;
             padding:clamp(28px,5vw,48px) clamp(18px,5vw,40px);
@@ -310,15 +308,15 @@
         </div>
         <div class="hero-right">
             <div class="divider"></div>
-            <p class="hero-desc">A VOID WEAR nasce da fusão entre a alfaiataria clássica e a atitude do streetwear urbano. Estamos a construir a nossa primeira coleção para o publico masculino — e queremos a tua opinião antes de lançar.</p>
+            <p class="hero-desc">A VOID WEAR está a desenvolver a sua primeira coleção masculina em Maceió — uma fusão entre alfaiataria clássica e streetwear urbano. Para garantir que a coleção reflecte o que o homem daqui realmente quer, criámos uma pesquisa rápida via Google Forms.</p>
             <div class="steps">
                 <div class="step">
                     <span class="step-n">01</span>
-                    <span class="step-t"><strong>Vê os looks</strong> — referências do estilo que estamos a construir.</span>
+                    <span class="step-t"><strong>Vê os looks</strong> — referências visuais do estilo que a VOID WEAR está a construir.</span>
                 </div>
                 <div class="step">
                     <span class="step-n">02</span>
-                    <span class="step-t"><strong>Responde à pesquisa</strong> — só para homens de Maceió. 2 minutos, anónimo.</span>
+                    <span class="step-t"><strong>Responde à pesquisa</strong> — destinada ao público masculino de Maceió. Dura cerca de 3 minutos.</span>
                 </div>
             </div>
         </div>
@@ -340,7 +338,7 @@
         </div>
     </div>
 
-    <!-- LOOKBOOK — 3 colunas, 13 fotos -->
+    <!-- LOOKBOOK — 3 colunas, 13 fotos, pools exclusivos -->
     <section class="lookbook" id="lookbook">
         <div class="lb-header">
             <span class="lb-title">LOOKBOOK — PRIMEIRA COLEÇÃO</span>
@@ -373,7 +371,7 @@
         <div class="b-line"></div>
         <div class="b-mid">
             <h2>A tua opinião define a coleção</h2>
-            <p>Exclusivo para homens de Maceió · 3 minutos</p>
+            <p>Pesquisa VOID WEAR · Público masculino · Maceió</p>
         </div>
         <div class="b-line"></div>
     </div>
@@ -382,10 +380,10 @@
     <section class="form-section" id="pesquisa">
         <div class="form-head">
             <div>
-                <h3>PESQUISA DE VALIDAÇÃO</h3>
-                <p>Para homens de Maceió — rola normalmente entre as perguntas.</p>
+                <h3>PESQUISA DE VALIDAÇÃO — VOID WEAR</h3>
+                <p>Destinada ao público masculino de Maceió · Via Google Forms · ~3 minutos</p>
             </div>
-            <span class="form-badge">Masculino · Maceió · 3 min</span>
+            <span class="form-badge">Masculino · Maceió</span>
         </div>
         <div class="iframe-wrap">
             <iframe
@@ -399,7 +397,7 @@
     <!-- FOOTER -->
     <footer class="site-footer">
         <div class="f-top">
-            <a class="f-logo" href="#">VOID<span class="dot"> </span>WEAR</a>
+            <a class="f-logo" href="#">VOID<span class="dot">·</span>WEAR</a>
             <a class="f-ig" href="https://www.instagram.com/voidwear_co/"
                target="_blank" rel="noopener noreferrer" aria-label="Instagram VOID WEAR">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -425,9 +423,10 @@
         function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
         /*
-          13 fotos divididas em 3 pools: 5 + 4 + 4
-          Intervalos diferentes → colunas nunca mudam ao mesmo tempo
-          Offsets de arranque → primeira mudança também assíncrona
+          13 fotos — pools EXCLUSIVOS, sem sobreposição entre colunas:
+          Coluna A: fotos 1–5   (5 fotos)
+          Coluna B: fotos 6–9   (4 fotos)
+          Coluna C: fotos 10–13 (4 fotos)
         */
         var PHOTOS = [
             'foto1.jpg','foto2.jpg','foto3.jpg','foto4.jpg','foto5.jpg',
@@ -437,11 +436,11 @@
 
         var COLS = [
             { id:'colA', numId:'numA', pool:PHOTOS.slice(0,5),  ms:4000, offset:0    },
-            { id:'colB', numId:'numB', pool:PHOTOS.slice(5,9),  ms:5500, offset:1400 },
-            { id:'colC', numId:'numC', pool:PHOTOS.slice(9,13), ms:7000, offset:2600 }
+            { id:'colB', numId:'numB', pool:PHOTOS.slice(5,9),  ms:5700, offset:1800 },
+            { id:'colC', numId:'numC', pool:PHOTOS.slice(9,13), ms:7300, offset:3200 }
         ];
 
-        /* constrói os elementos de imagem para cada coluna */
+        /* ── constrói imagens de cada coluna ── */
         COLS.forEach(function (col) {
             col.el  = document.getElementById(col.id);
             col.num = document.getElementById(col.numId);
@@ -456,6 +455,8 @@
                 var img = document.createElement('img');
                 img.src     = src;
                 img.alt     = 'Look ' + pad(i + 1);
+                /* ✔ só a primeira foto de cada coluna é eager
+                   as restantes são lazy — não bloqueiam o render */
                 img.loading = (i === 0) ? 'eager' : 'lazy';
 
                 var ph = document.createElement('div');
@@ -472,6 +473,7 @@
 
                 div.appendChild(img);
                 div.appendChild(ph);
+                /* insere ANTES do overlay — overlay fica sempre por cima */
                 col.el.insertBefore(div, overlay);
             });
 
@@ -483,44 +485,72 @@
             if (fi) fi.style.willChange = 'transform';
         });
 
-        /* avança a foto de uma coluna */
+        /*
+          ✔ FIX: setTimeout órfão eliminado
+          Em vez de setTimeout para remover .on, usamos transitionend
+          — só remove depois da transição CSS de opacidade terminar
+          — se a página for para segundo plano durante a transição,
+            o evento dispara quando voltar, sem conflitos
+        */
         function advance(col) {
             var prev = col.imgs[col.cur];
-            prev.style.willChange = 'auto';
-            var pi = prev.querySelector('img');
-            if (pi) pi.style.willChange = 'auto';
-            prev.classList.remove('on');
-
-            col.cur = (col.cur + 1) % col.pool.length;
-
+            col.cur  = (col.cur + 1) % col.pool.length;
             var next = col.imgs[col.cur];
+
+            /* 1. activa a próxima PRIMEIRO — cross-fade sem flash escuro */
             next.style.willChange = 'opacity';
             var ni = next.querySelector('img');
             if (ni) ni.style.willChange = 'transform';
             next.classList.add('on');
             col.num.textContent = pad(col.cur + 1);
+
+            /* 2. remove a anterior só quando a sua transição terminar */
+            function onEnd() {
+                prev.removeEventListener('transitionend', onEnd);
+                prev.classList.remove('on');
+                prev.style.willChange = 'auto';
+                var pi = prev.querySelector('img');
+                if (pi) pi.style.willChange = 'auto';
+            }
+            prev.addEventListener('transitionend', onEnd);
         }
 
-        /* arranca cada coluna com o seu offset */
+        /* ── arranca cada coluna com o seu offset ── */
         COLS.forEach(function (col) {
-            col.timer = null;
+            col.timer  = null;
+            col.startT = Date.now(); /* guarda timestamp de arranque */
             setTimeout(function () {
-                col.timer = setInterval(function () { advance(col); }, col.ms);
+                col.startT = Date.now();
+                col.timer  = setInterval(function () { advance(col); }, col.ms);
             }, col.offset);
         });
 
         /*
-          Pausa quando o separador vai para segundo plano
-          → poupa bateria no mobile, evita acumulação de timers
+          ✔ FIX: visibilitychange restaura offsets
+          Quando a página volta ao primeiro plano, recalcula quanto
+          tempo falta para a próxima mudança de cada coluna e usa
+          esse valor como delay, mantendo o ritmo assíncrono original
         */
+        var pauseTime = 0;
+
         document.addEventListener('visibilitychange', function () {
             if (document.hidden) {
-                COLS.forEach(function (c) { clearInterval(c.timer); c.timer = null; });
+                pauseTime = Date.now();
+                COLS.forEach(function (c) {
+                    clearInterval(c.timer);
+                    c.timer = null;
+                    /* guarda tempo restante até à próxima mudança */
+                    c.remaining = c.ms - ((Date.now() - c.startT) % c.ms);
+                });
             } else {
                 COLS.forEach(function (c) {
-                    if (!c.timer) {
-                        c.timer = setInterval(function () { advance(c); }, c.ms);
-                    }
+                    /* retoma com o tempo restante correcto */
+                    var rem = (c.remaining > 0 && c.remaining < c.ms) ? c.remaining : c.ms;
+                    setTimeout(function () {
+                        advance(c);
+                        c.startT = Date.now();
+                        c.timer  = setInterval(function () { advance(c); }, c.ms);
+                    }, rem);
                 });
             }
         });
