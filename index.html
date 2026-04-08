@@ -517,11 +517,11 @@
         </div>
         <div class="hero-right">
             <div class="divider"></div>
-            <p class="hero-desc">Antes de começar, dá uma olhada nas fotos abaixo, são as referências reais do estilo que a VOID WEAR está a desenvolver. Elas vão ajudar-te a responder melhor a pesquisa que está logo abaixo.</p>
+            <p class="hero-desc">Antes de começar, dá uma olhada nas fotos acima — são as referências reais do estilo que a VOID WEAR está a desenvolver. Elas vão ajudar-te a responder melhor a pesquisa que está logo abaixo.</p>
             <div class="steps">
                 <div class="step">
                     <span class="step-n">01</span>
-                    <span class="step-t"><strong>Vê os looks</strong> — as fotos são as referências da coleção. Durante a pesquisa, podes revê-las a qualquer momento pelo botão <em style="color:var(--gold);">Ver Looks</em> no canto inferior direito.</span>
+                    <span class="step-t"><strong>Vê os looks</strong> — as fotos do topo são as referências da coleção. Durante a pesquisa, podes revê-las a qualquer momento pelo botão <em style="color:var(--gold);">Ver Looks</em> no canto inferior direito.</span>
                 </div>
                 <div class="step">
                     <span class="step-n">02</span>
@@ -551,7 +551,7 @@
     <section class="lookbook" id="lookbook">
         <div class="lb-header">
             <span class="lb-title">LOOKBOOK — PRIMEIRA COLEÇÃO</span>
-            <span class="lb-count">13 referências</span>
+            <span class="lb-count">25 referências</span>
         </div>
         <div class="lb-grid">
             <div class="lb-col" id="colA">
@@ -637,7 +637,7 @@
                     </svg>
                 </button>
                 <div class="gal-prog"><div class="gal-prog-bar" id="galBar"></div></div>
-                <span class="gal-counter"><em id="galCur">1</em> / <span id="galTot">13</span></span>
+                <span class="gal-counter"><em id="galCur">1</em> / <span id="galTot">25</span></span>
                 <button class="gal-arrow" id="galNext" aria-label="Próxima foto">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                          stroke-linecap="round" stroke-linejoin="round">
@@ -682,21 +682,24 @@
         function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
         /*
-          13 fotos — pools EXCLUSIVOS, sem sobreposição entre colunas:
-          Coluna A: fotos 1–5   (5 fotos)
-          Coluna B: fotos 6–9   (4 fotos)
-          Coluna C: fotos 10–13 (4 fotos)
+          25 fotos — pools EXCLUSIVOS, sem sobreposição entre colunas:
+          Coluna A: fotos 1–9   (9 fotos)
+          Coluna B: fotos 10–17 (8 fotos)
+          Coluna C: fotos 18–25 (8 fotos)
         */
         var PHOTOS = [
             'foto1.jpg','foto2.jpg','foto3.jpg','foto4.jpg','foto5.jpg',
             'foto6.jpg','foto7.jpg','foto8.jpg','foto9.jpg',
-            'foto10.jpg','foto11.jpg','foto12.jpg','foto13.jpg'
+            'foto10.jpg','foto11.jpg','foto12.jpg','foto13.jpg','foto14.jpg',
+            'foto15.jpg','foto16.jpg','foto17.jpg',
+            'foto18.jpg','foto19.jpg','foto20.jpg','foto21.jpg','foto22.jpg',
+            'foto23.jpg','foto24.jpg','foto25.jpg'
         ];
 
         var COLS = [
-            { id:'colA', numId:'numA', pool:PHOTOS.slice(0,5),  ms:5000, offset:0    },
-            { id:'colB', numId:'numB', pool:PHOTOS.slice(5,9),  ms:5800, offset:1600 },
-            { id:'colC', numId:'numC', pool:PHOTOS.slice(9,13), ms:6600, offset:3000 }
+            { id:'colA', numId:'numA', pool:PHOTOS.slice(0,9),   ms:5000, offset:0    },
+            { id:'colB', numId:'numB', pool:PHOTOS.slice(9,17),  ms:5800, offset:1600 },
+            { id:'colC', numId:'numC', pool:PHOTOS.slice(17,25), ms:6600, offset:3000 }
         ];
 
         /* ── constrói imagens de cada coluna ── */
@@ -832,7 +835,10 @@
         var GAL_PHOTOS = [
             'foto1.jpg','foto2.jpg','foto3.jpg','foto4.jpg','foto5.jpg',
             'foto6.jpg','foto7.jpg','foto8.jpg','foto9.jpg',
-            'foto10.jpg','foto11.jpg','foto12.jpg','foto13.jpg'
+            'foto10.jpg','foto11.jpg','foto12.jpg','foto13.jpg','foto14.jpg',
+            'foto15.jpg','foto16.jpg','foto17.jpg',
+            'foto18.jpg','foto19.jpg','foto20.jpg','foto21.jpg','foto22.jpg',
+            'foto23.jpg','foto24.jpg','foto25.jpg'
         ];
         var galN = GAL_PHOTOS.length;
         galTotEl.textContent = galN;
